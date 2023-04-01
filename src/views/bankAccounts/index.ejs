@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Bank Accounts</title>
+    <link rel="stylesheet" type="text/css" href="/styles/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Bank Accounts</h1>
+        <a href="/bankAccounts/new">Create Bank Account</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>Account Number</th>
+                    <th>Account Holder</th>
+                    <th>Balance</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% bankAccounts.forEach(function(bankAccount) { %>
+                    <tr>
+                        <td>
+                            <%= bankAccount.accountNumber %>
+                        </td>
+                        <td>
+                            <%= bankAccount.accountHolder %>
+                        </td>
+                        <td>
+                            <%= bankAccount.balance %>
+                        </td>
+                        <td>
+                            <%= bankAccount.email %>
+                        </td>
+                        <td>
+                            <%= bankAccount.status %>
+                        </td>
+                        <td>
+                            <a href="/bankAccounts/<%= bankAccount._id %>">Show</a>
+                            <a href="/bankAccounts/<%= bankAccount._id %>/edit">Edit</a>
+                            <form action="/bankAccounts/<%= bankAccount._id %>?_method=DELETE" method="POST">
+                                <button>Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <% }) %>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

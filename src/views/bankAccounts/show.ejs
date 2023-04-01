@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Show Bank Account</title>
+    <link rel="stylesheet" type="text/css" href="/styles/styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Show Bank Account</h1>
+        <div>
+            <label>Account Number:</label>
+            <span>
+                <%= bankAccount.accountNumber %>
+            </span>
+        </div>
+        <div>
+            <label>Account Holder:</label>
+            <span>
+                <%= bankAccount.accountHolder %>
+            </span>
+        </div>
+        <div>
+            <label>Balance:</label>
+            <span>
+                <%= bankAccount.balance %>
+            </span>
+        </div>
+        <div>
+            <label>Email:</label>
+            <span>
+                <%= bankAccount.email %>
+            </span>
+        </div>
+        <div>
+            <label>Status:</label>
+            <span>
+                <%= bankAccount.status %>
+            </span>
+        </div>
+        <a href="/bankAccounts">Back to List</a>
+    </div>
+</body>
+
+</html>

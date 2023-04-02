@@ -36,6 +36,13 @@
             </div>
             <button type="submit">Create</button>
         </form>
+        <% if (typeof errors !="undefined" ) { %>
+            <ul>
+                <li>
+                    <%= errors.message %>
+                </li>
+            </ul>
+            <% } %>
     </div>
 </body>
 

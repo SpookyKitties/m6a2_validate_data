@@ -30,7 +30,10 @@ const BankAccountSchema: Schema = new Schema({
     unique: true,
     minlength: 5,
     maxlength: 50,
-    match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+    validate: {
+      validator: (value: any) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+      message: (props: any) => `${props.value} is no a valid email address`,
+    },
   },
   status: {
     type: String,

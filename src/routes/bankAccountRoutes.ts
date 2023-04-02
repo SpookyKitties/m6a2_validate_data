@@ -16,7 +16,10 @@ router.get("/", async (req, res) => {
 
 // New
 router.get("/new", (req, res) => {
-  res.render("bankAccounts/new");
+  console.log(req);
+
+  // const errors = req.flash("error");
+  res.render("bankAccounts/new", {});
 });
 
 // Create
@@ -32,9 +35,12 @@ router.post("/", async (req, res) => {
       status: status,
     });
     res.redirect("/bankAccounts");
-  } catch (error) {
-    console.error(error);
-    res.redirect("/bankAccounts/new");
+  } catch (error: any) {
+    console.log(error);
+    res.render("bankAccounts/new", {
+      errors: error,
+      bankAccount: req.body,
+    });
   }
 });
 
@@ -45,6 +51,7 @@ router.get("/:id", async (req, res) => {
     res.render("bankAccounts/show", { bankAccount });
   } catch (error) {
     console.error(error);
+
     res.redirect("/bankAccounts");
   }
 });

@@ -61,7 +61,7 @@ router.get("/:id/edit", async (req, res) => {
 });
 
 // Update
-router.post("/:id", async (req, res) => {
+router.put("/:id", async (req, res) => {
   const { accountNumber, accountHolder, balance, email, status } = req.body;
 
   try {

@@ -6,6 +6,8 @@ To simplify matters, I have create two scripts that will handle everything neede
 
 npm i
 
+npm i -g ts-node nodemon typescript sass
+
 sass src/styles/styles.scss public/styles/styles.css
 
 nodemon src/app.ts
@@ -19,5 +21,7 @@ For mac/linux/unix, there is a run.sh file that will handle the same task. As by
 3. run `./run.sh`
 
 The commands mentioned before this will likely be an easier option.
+
+In addition, the global packages ts-node nodemon typescript and sass are installed. This allows for the use of Typescript, a superset of JavaScript, to be used by nodemon.
 
 Now, to view the project, open up localhost:3000/bankAccount [Home Page](localhost:3000/bankAcccount). This links to a list of all current bank accounts. The rest of the guide will be the provided video.

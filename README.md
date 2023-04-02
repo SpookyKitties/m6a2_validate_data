@@ -1,5 +1,7 @@
 # Instructions
 
+First off, clone the following repository either via your favorite git manager, or via the command line: https://github.com/jaredparkinson/m6a2_validate_data
+
 To simplify matters, I have create two scripts that will handle everything needed to run this assignment. For windows there is a "run.cmd" file that run "npm install", do any necessary compilation, and start the express server with nodemon. If for some reason this does not work, run the following commands:
 
 ```

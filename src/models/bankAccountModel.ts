@@ -7,10 +7,6 @@ const BankAccountSchema: Schema = new Schema({
     unique: true,
     minlength: 6,
     maxlength: 20,
-    range: {
-      min: 10000000,
-      max: 20000000,
-    },
   },
   accountHolder: {
     type: String,

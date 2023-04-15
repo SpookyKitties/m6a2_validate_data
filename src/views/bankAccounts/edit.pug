@@ -1,0 +1,32 @@
+doctype html
+html
+
+  head
+    meta(charset='utf-8')
+    title Edit Bank Account
+    link(rel='stylesheet', type='text/css', href='/styles/styles.css')
+
+  body
+    .container
+      h1 Edit Bank Account
+      form(action=`/bankAccounts/${bankAccount._id}?_method=PUT`, method='POST')
+        .form-group
+          label(for='accountNumber') Account Number:
+          input(type='text', id='accountNumber', name='accountNumber', value=bankAccount.accountNumber, class='form-control')
+        .form-group
+          label(for='accountHolder') Account Holder:
+          input(type='text', id='accountHolder', name='accountHolder', value=bankAccount.accountHolder, class='form-control')
+        .form-group
+          label(for='balance') Balance:
+          input(type='number', id='balance', name='balance', value=bankAccount.balance, class='form-control')
+        .form-group
+          label(for='email') Email:
+          input(type='email', id='email', name='email', value=bankAccount.email, class='form-control')
+        .form-group
+          label(for='status') Status:
+          select(id='status', name='status', class='form-control')
+            option(value='active', selected=bankAccount.status==='active') Active
+            option(value='inactive', selected=bankAccount.status==='inactive') Inactive
+        .form-group
+          button.btn.btn-primary(type='submit') Save
+          a.btn.btn-secondary(href=`/bankAccounts/${bankAccount._id}`) Cancel

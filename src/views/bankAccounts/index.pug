@@ -1,0 +1,34 @@
+doctype html
+html
+
+  head
+    meta(charset='utf-8')
+    title Bank Accounts
+    link(rel='stylesheet', type='text/css', href='/styles/styles.css')
+
+  body
+    .container
+      h1 Bank Accounts
+      a.create-account-btn(href='/bankAccounts/new') Create Bank Account
+      table
+        thead
+          tr
+            th Account Number
+            th Account Holder
+            th Balance
+            th Email
+            th Status
+            th Actions
+        tbody
+          each bankAccount in bankAccounts
+            tr
+              td #{bankAccount.accountNumber}
+              td #{bankAccount.accountHolder}
+              td #{bankAccount.balance}
+              td #{bankAccount.email}
+              td #{bankAccount.status}
+              td
+                a(href='/bankAccounts/#{bankAccount._id}') Show
+                a(href='/bankAccounts/#{bankAccount._id}/edit') Edit
+                form(action='/bankAccounts/#{bankAccount._id}?_method=DELETE', method='POST')
+                  button Delete

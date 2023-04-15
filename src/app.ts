@@ -14,7 +14,7 @@ import methodOverride from "method-override";
   console.log("Connected to MongoDB database");
 
   // Configure middleware
-  app.set("view engine", "ejs");
+  app.set("view engine", "pug");
   app.set("views", "src/views");
   app.use(express.urlencoded({ extended: true }));
   app.use(express.static("public"));

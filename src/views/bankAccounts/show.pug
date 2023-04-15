@@ -1,0 +1,27 @@
+doctype html
+html
+
+  head
+    meta(charset='utf-8')
+    title Show Bank Account
+    link(rel='stylesheet', type='text/css', href='/styles/styles.css')
+
+  body
+    .container
+      h1 Show Bank Account
+      div
+        label Account Number:
+        span= bankAccount.accountNumber
+      div
+        label Account Holder:
+        span= bankAccount.accountHolder
+      div
+        label Balance:
+        span= bankAccount.balance
+      div
+        label Email:
+        span= bankAccount.email
+      div
+        label Status:
+        span= bankAccount.status
+      a(href='/bankAccounts') Back to List

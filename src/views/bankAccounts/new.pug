@@ -1,0 +1,33 @@
+doctype html
+html
+
+  head
+    meta(charset='utf-8')
+    title Create Bank Account
+    link(rel='stylesheet', type='text/css', href='/styles/styles.css')
+
+  body
+    .container
+      h1 Create Bank Account
+      form(action='/bankAccounts', method='POST')
+        .form-group
+          label(for='accountNumber') Account Number
+          input(type='text', id='accountNumber', name='accountNumber', required)
+        .form-group
+          label(for='accountHolder') Account Holder
+          input(type='text', id='accountHolder', name='accountHolder', required)
+        .form-group
+          label(for='balance') Balance
+          input(type='number', id='balance', name='balance', required)
+        .form-group
+          label(for='email') Email
+          input(type='email', id='email', name='email', required)
+        .form-group
+          label(for='status') Status
+          select(id='status', name='status')
+            option(value='active', selected) Active
+            option(value='inactive') Inactive
+        button(type='submit') Create
+        if typeof errors !== 'undefined'
+          ul
+            li= errors.message

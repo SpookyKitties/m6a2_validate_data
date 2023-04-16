@@ -24,11 +24,4 @@ router.get("/:id/edit", editBankAccountWeb);
 router.put("/:id", updateBankAccountWeb);
 router.delete("/:id", deleteBankAccountWeb);
 
-// JSON routes
-router.get("/api", getBankAccountsJSON);
-router.get("/api/:id", getBankAccountJSON);
-router.post("/api", createBankAccountJSON);
-router.put("/api/:id", updateBankAccountJSON);
-router.delete("/api/:id", deleteBankAccountJSON);
-
 export default router;

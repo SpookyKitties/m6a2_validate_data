@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
-import bankAccountRoutes from "./routes/bankAccountRoutes";
+import bankAccountRoutes from "./routes/bankAccountRouterWeb";
+import bankAccountRoutesJSON from "./routes/bankAccountRouterJSON";
 import methodOverride from "method-override";
 import { errorHandler } from "./controllers/errorHandler";
 
@@ -23,6 +24,7 @@ import { errorHandler } from "./controllers/errorHandler";
   app.use(errorHandler);
   // Configure routes
   app.use("/bankAccounts", bankAccountRoutes);
+  app.use("/api/bankAccounts", bankAccountRoutesJSON);
 
   // Start server
   const PORT = process.env.PORT || 3000;

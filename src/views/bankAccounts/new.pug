@@ -15,7 +15,7 @@ html
           input(type='text', id='accountNumber', name='accountNumber', value=faker.finance.account(), required)
         .form-group
           label(for='accountHolder') Account Holder
-          input(type='text', id='accountHolder', name='accountHolder', value=faker.name.findName(), required)
+          input(type='text', id='accountHolder', name='accountHolder', value=faker.name.fullName(), required)
         .form-group
           label(for='balance') Balance
           input(type='number', id='balance', name='balance', value=faker.finance.amount(100, 1000000), required)

@@ -12,16 +12,16 @@ html
       form(action='/bankAccounts', method='POST')
         .form-group
           label(for='accountNumber') Account Number
-          input(type='text', id='accountNumber', name='accountNumber', required)
+          input(type='text', id='accountNumber', name='accountNumber', value=faker.finance.account(), required)
         .form-group
           label(for='accountHolder') Account Holder
-          input(type='text', id='accountHolder', name='accountHolder', required)
+          input(type='text', id='accountHolder', name='accountHolder', value=faker.name.findName(), required)
         .form-group
           label(for='balance') Balance
-          input(type='number', id='balance', name='balance', required)
+          input(type='number', id='balance', name='balance', value=faker.finance.amount(100, 1000000), required)
         .form-group
           label(for='email') Email
-          input(type='email', id='email', name='email', required)
+          input(type='email', id='email', name='email', value=faker.internet.email(), required)
         .form-group
           label(for='status') Status
           select(id='status', name='status')

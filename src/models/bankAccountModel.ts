@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, type Document } from 'mongoose';
 
 const BankAccountSchema: Schema = new Schema({
   accountNumber: {
@@ -6,19 +6,19 @@ const BankAccountSchema: Schema = new Schema({
     required: true,
     unique: true,
     minlength: 6,
-    maxlength: 20,
+    maxlength: 20
   },
   accountHolder: {
     type: String,
     required: true,
     minlength: 2,
-    maxlength: 50,
+    maxlength: 50
   },
   balance: {
     type: Number,
     required: true,
     min: 0,
-    max: 9999999,
+    max: 9999999
   },
   email: {
     type: String,
@@ -28,21 +28,22 @@ const BankAccountSchema: Schema = new Schema({
     maxlength: 50,
     validate: {
       validator: (value: any) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
-      message: (props: any) => `${props.value} is no a valid email address`,
-    },
+      message: (props: any) =>
+        `${props.value as string} is not a valid email address`
+    }
   },
   status: {
     type: String,
-    enum: ["active", "inactive"],
-    required: true,
+    enum: ['active', 'inactive'],
+    required: true
   },
   createdAt: {
     type: Date,
-    default: Date.now,
+    default: Date.now
   },
   updatedAt: {
     type: Date,
-    default: Date.now,
+    default: Date.now
   },
   transactions: [
     {
@@ -50,20 +51,20 @@ const BankAccountSchema: Schema = new Schema({
         type: Number,
         required: true,
         min: 0,
-        max: 9999999,
+        max: 9999999
       },
       description: {
         type: String,
         required: true,
         minlength: 1,
-        maxlength: 100,
+        maxlength: 100
       },
       date: {
         type: Date,
-        default: Date.now,
-      },
-    },
-  ],
+        default: Date.now
+      }
+    }
+  ]
 });
 
-export default mongoose.model<Document>("BankAccount", BankAccountSchema);
+export default mongoose.model<Document>('BankAccount', BankAccountSchema);

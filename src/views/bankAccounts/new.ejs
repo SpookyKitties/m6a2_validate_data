@@ -13,19 +13,22 @@
         <form action="/bankAccounts" method="POST">
             <div class="form-group">
                 <label for="accountNumber">Account Number</label>
-                <input type="text" id="accountNumber" name="accountNumber" required>
+                <input type="text" id="accountNumber" name="accountNumber" value="<%= faker.finance.account() %>"
+                    required>
             </div>
             <div class="form-group">
                 <label for="accountHolder">Account Holder</label>
-                <input type="text" id="accountHolder" name="accountHolder" required>
+                <input type="text" id="accountHolder" name="accountHolder" value="<%= faker.name.findName() %>"
+                    required>
             </div>
             <div class="form-group">
                 <label for="balance">Balance</label>
-                <input type="number" id="balance" name="balance" required>
+                <input type="number" id="balance" name="balance" value="<%= faker.finance.amount(100, 1000000) %>"
+                    required>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email" value="<%= faker.internet.email() %>" required>
             </div>
             <div class="form-group">
                 <label for="status">Status</label>

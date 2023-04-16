@@ -28,7 +28,7 @@ html
               td #{bankAccount.email}
               td #{bankAccount.status}
               td
-                a(href='/bankAccounts/#{bankAccount._id}') Show
-                a(href='/bankAccounts/#{bankAccount._id}/edit') Edit
-                form(action='/bankAccounts/#{bankAccount._id}?_method=DELETE', method='POST')
+                a(href=`/bankAccounts/${bankAccount._id}`) Show
+                a(href=`/bankAccounts/${bankAccount._id}/edit`) Edit
+                form(action=`/bankAccounts/${bankAccount._id}?_method=DELETE`, method='POST')
                   button Delete

@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import bankAccountRoutes from "./routes/bankAccountRoutes";
 import methodOverride from "method-override";
+import { errorHandler } from "./controllers/errorHandler";
 
 (async function () {
   const app = express();
@@ -19,7 +20,7 @@ import methodOverride from "method-override";
   app.use(express.urlencoded({ extended: true }));
   app.use(express.static("public"));
   app.use(methodOverride("_method"));
-
+  app.use(errorHandler);
   // Configure routes
   app.use("/bankAccounts", bankAccountRoutes);
 

@@ -1,100 +1,34 @@
 import express from "express";
 
-import BankAccount from "../models/bankAccountModel";
+import {
+  createBankAccountWeb,
+  getBankAccountsWeb,
+  getBankAccountWeb,
+  updateBankAccountWeb,
+  deleteBankAccountWeb,
+  editBankAccountWeb,
+  getBankAccountsJSON,
+  getBankAccountJSON,
+  createBankAccountJSON,
+  updateBankAccountJSON,
+  deleteBankAccountJSON,
+} from "../controllers/bankAccountController";
 const router = express.Router();
 
-// Index
-router.get("/", async (req, res) => {
-  try {
-    const bankAccounts = await BankAccount.find({});
-    res.render("bankAccounts/index", { bankAccounts });
-  } catch (error) {
-    console.error(error);
-    res.redirect("/bankAccounts");
-  }
-});
+// Web routes
+router.get("/", getBankAccountsWeb);
+router.get("/new", (req, res) => res.render("bankAccounts/new", {}));
+router.post("/", createBankAccountWeb);
+router.get("/:id", getBankAccountWeb);
+router.get("/:id/edit", editBankAccountWeb);
+router.put("/:id", updateBankAccountWeb);
+router.delete("/:id", deleteBankAccountWeb);
 
-// New
-router.get("/new", (req, res) => {
-  console.log(req);
-
-  // const errors = req.flash("error");
-  res.render("bankAccounts/new", {});
-});
-
-// Create
-router.post("/", async (req, res) => {
-  try {
-    const { accountNumber, accountHolder, balance, email, status } = req.body;
-
-    await BankAccount.create({
-      accountNumber: accountNumber,
-      accountHolder: accountHolder,
-      balance: balance,
-      email: email,
-      status: status,
-    });
-    res.redirect("/bankAccounts");
-  } catch (error: any) {
-    console.log(error);
-    res.render("bankAccounts/new", {
-      errors: error,
-      bankAccount: req.body,
-    });
-  }
-});
-
-// Show
-router.get("/:id", async (req, res) => {
-  try {
-    const bankAccount = await BankAccount.findById(req.params.id);
-    res.render("bankAccounts/show", { bankAccount });
-  } catch (error) {
-    console.error(error);
-
-    res.redirect("/bankAccounts");
-  }
-});
-
-// Edit
-router.get("/:id/edit", async (req, res) => {
-  try {
-    const bankAccount = await BankAccount.findById(req.params.id);
-    res.render("bankAccounts/edit", { bankAccount });
-  } catch (error) {
-    console.error(error);
-    res.redirect("/bankAccounts");
-  }
-});
-
-// Update
-router.put("/:id", async (req, res) => {
-  const { accountNumber, accountHolder, balance, email, status } = req.body;
-
-  try {
-    await BankAccount.findByIdAndUpdate(req.params.id, {
-      accountNumber: accountNumber,
-      accountHolder: accountHolder,
-      balance: balance,
-      email: email,
-      status: status,
-    });
-    res.redirect(`/bankAccounts/${req.params.id}`);
-  } catch (error) {
-    console.error(error);
-    res.redirect(`/bankAccounts/${req.params.id}/edit`);
-  }
-});
-
-// Delete
-router.delete("/:id", async (req, res) => {
-  try {
-    await BankAccount.findByIdAndRemove(req.params.id);
-    res.redirect("/bankAccounts");
-  } catch (error) {
-    console.error(error);
-    res.redirect("/bankAccounts");
-  }
-});
+// JSON routes
+router.get("/api", getBankAccountsJSON);
+router.get("/api/:id", getBankAccountJSON);
+router.post("/api", createBankAccountJSON);
+router.put("/api/:id", updateBankAccountJSON);
+router.delete("/api/:id", deleteBankAccountJSON);
 
 export default router;

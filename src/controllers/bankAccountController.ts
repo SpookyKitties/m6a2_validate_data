@@ -193,3 +193,8 @@ export const editBankAccountWeb = async (
     next(err);
   }
 };
+
+export const getRandomData = (req: Request, res: Response): void => {
+  // console.log('asdiofjaiosdfj');
+  res.send({ num: 12341234 });
+};

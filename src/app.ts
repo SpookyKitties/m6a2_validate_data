@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import bankAccountRoutes from './routes/bankAccountRouterWeb';
 import bankAccountRoutesJSON from './routes/bankAccountRouterJSON';
 import methodOverride from 'method-override';
-import { errorHandler } from './controllers/errorHandler';
+import { errorHandler } from './middleware/errorHandler';
 
 void (async function () {
   const app = express();

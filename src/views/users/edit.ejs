@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User</title>
+</head>
+
+<body>
+    <h1>Edit User</h1>
+    <form action="/users/<%= user._id %>" method="POST">
+        <input type="hidden" name="_method" value="PUT">
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" value="<%= user.username %>" required>
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" value="<%= user.password %>" required>
+        <br>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" value="<%= user.email %>" required>
+        <br>
+        <label for="firstName">First Name:</label>
+        <input type="text" name="firstName" id="firstName" value="<%= user.firstName %>" required>
+        <br>
+        <label for="lastName">Last Name:</label>
+        <input type="text" name="lastName" id="lastName" value="<%= user.lastName %>" required>
+        <br>
+        <label for="dateOfBirth">Date of Birth:</label>
+        <input type="date" name="dateOfBirth" id="dateOfBirth"
+            value="<%= user.dateOfBirth.toISOString().substring(0, 10) %>" required>
+        <br>
+        <label for="accountLevel">Account Level:</label>
+        <select name="accountLevel" id="accountLevel">
+            <option value="regular" <%=user.accountLevel==='regular' ? 'selected' : '' %>>Regular</option>
+            <option value="admin" <%=user.accountLevel==='admin' ? 'selected' : '' %>>Admin</option>
+        </select>
+        <br>
+        <input type="submit" value="Save Changes">
+    </form>
+    <a href="/users">Back to Users</a>
+</body>
+
+</html>

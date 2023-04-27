@@ -8,6 +8,6 @@
     "forceConsistentCasingInFileNames": true,
     "lib": ["dom", "ES2017"]
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "public/js/*.ts"],
   "exclude": ["node_modules"]
 }

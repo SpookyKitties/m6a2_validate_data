@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan <%= loan._id %>
+    </title>
+</head>
+
+<body>
+    <h1>Loan <%= loan._id %>
+    </h1>
+    <p>Amount: <%= loan.amount %>
+    </p>
+    <p>Interest Rate: <%= loan.interestRate %>
+    </p>
+    <p>Term: <%= loan.term %>
+    </p>
+    <p>User: <%= loan.user %>
+    </p>
+    <a href="/loans">Back to Loans</a>
+</body>
+
+</html>

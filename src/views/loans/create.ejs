@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a Loan</title>
+</head>
+
+<body>
+    <h1>Create a Loan</h1>
+    <form action="/loans" method="POST">
+        <label for="amount">Amount:</label>
+        <input type="number" name="amount" id="amount" required>
+        <br>
+        <label for="interestRate">Interest Rate:</label>
+        <input type="number" name="interestRate" id="interestRate" required>
+        <br>
+        <label for="term">Term:</label>
+        <input type="number" name="term" id="term" required>
+        <br>
+        <label for="user">User:</label>
+        <input type="text" name="user" id="user" required>
+        <br>
+        <input type="submit" value="Create Loan">
+    </form>
+    <a href="/loans">Back to Loans</a>
+</body>
+
+</html>

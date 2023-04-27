@@ -13,9 +13,9 @@ const router = express.Router();
 // JSON routes
 router.get('/', getUsersJSON);
 
+router.get('/delete/:id', deleteUserJSON);
 router.get('/:id', getUserJSON);
 router.post('/', createUserJSON);
 router.put('/:id', updateUserJSON);
-router.delete('/:id', deleteUserJSON);
 
 export default router;

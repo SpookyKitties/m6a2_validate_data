@@ -215,9 +215,13 @@ export const deleteUserJSON = async (
   next: NextFunction
 ): Promise<Response<any, Record<string, any>> | undefined> => {
   try {
+    const admin = await validateUserAdmin(req.headers.token as string);
+    if (!admin) {
+      throw new Error('User could not be found, or user is not an admin');
+    }
     const user = await User.findByIdAndDelete(req.params.id);
     if (user == null) {
-      return res.status(404).send('User not found');
+      return res.status(404).json('User not found');
     }
     res.json(`User with _id ${req.params.id} has been deleted`);
   } catch (err) {

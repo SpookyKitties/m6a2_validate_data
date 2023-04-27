@@ -22,7 +22,7 @@ router.get('/login', showLoginForm);
 router.post('/login', loginUser);
 
 router.post('/create', createUserWeb);
-router.post('/logout', logoutUser);
+router.get('/logout', logoutUser);
 router.get('/:id', getUserWeb);
 router.put('/:id', updateUserWeb);
 router.delete('/:id', deleteUserWeb);

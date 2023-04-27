@@ -1,8 +1,7 @@
 import { type Request, type Response, type NextFunction } from 'express';
 import User, { type IUser } from '../models/userModel';
 import dotenv from 'dotenv';
-import { validateUser } from './validateUser';
-import { log } from 'console';
+import { validateUser, validateUserAdmin } from './validateUser';
 dotenv.config({ path: './.env.local' });
 async function getUsers(): Promise<IUser[]> {
   return await User.find({});
@@ -14,7 +13,7 @@ export const getUsersJSON = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const verify = await validateUser(req.headers.authorization as string);
+    const verify = await validateUserAdmin(req.headers.authorization as string);
 
     if (verify) {
       const users = await getUsers();
@@ -33,16 +32,14 @@ export const getUsersWeb = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    console.log(`Cookies ${req.cookies}`);
-
-    const verify = await validateUser(req.cookies.token as string);
+    const verify = await validateUserAdmin(req.cookies.token as string);
 
     if (verify) {
       const users = await getUsers();
 
       res.render('users/index', { users });
     }
-    throw new Error("User either doesn't exist, or isn't and admin");
+    res.redirect('/users/login');
   } catch (err) {
     next(err);
   }
@@ -117,7 +114,10 @@ export const newUserWeb = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  res.render('users/new');
+  if (!(await validateUser(req.cookies.token as string))) {
+    res.render('users/new');
+  }
+  res.redirect('/users');
 };
 
 export const createUserJSON = async (
@@ -302,12 +302,6 @@ export const logoutUser = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  if (req.session !== undefined) {
-    req.session.destroy(err => {
-      if (err !== undefined) {
-        console.log(err);
-      }
-      res.redirect('/users/login');
-    });
-  }
+  res.clearCookie('token');
+  res.redirect('/users/login');
 };

@@ -1,6 +1,6 @@
 import { type Request, type Response, type NextFunction } from 'express';
 import Loan, { type ILoan } from '../models/loanModel';
-import { validateUser } from './validateUser';
+import { validateUserAdmin } from './validateUser';
 
 async function getLoans(): Promise<ILoan[]> {
   return await Loan.find({});
@@ -38,7 +38,7 @@ export const getLoansWeb = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const verify = await validateUser(req.headers.authorization as string);
+    const verify = await validateUserAdmin(req.headers.authorization as string);
 
     if (verify) {
       const loans = await getLoans();

@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <h1>Delete User</h1>
+    <h1>Delete User | <a href="/users/logout">Logout</a></h1>
     <p>Are you sure you want to delete the user '<%= user.username %>'?</p>
     <form action="/users/<%= user._id %>" method="POST">
         <input type="hidden" name="_method" value="DELETE">

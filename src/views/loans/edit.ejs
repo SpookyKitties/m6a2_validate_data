@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <h1>Edit Loan <%= loan._id %>
+    <h1>Edit Loan <%= loan._id %> | <a href="/users/logout">Logout</a>
     </h1>
     <form action="/loans/<%= loan._id %>" method="POST">
         <input type="hidden" name="_method" value="PUT">

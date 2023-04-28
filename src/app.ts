@@ -1,16 +1,18 @@
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import dotenv from 'dotenv';
 import express from 'express';
+import { readFileSync } from 'fs';
+import https from 'https';
+import methodOverride from 'method-override';
 import mongoose from 'mongoose';
-import bankAccountRoutes from './routes/bankAccountRouterWeb';
+import { errorHandler } from './middleware/errorHandler';
 import bankAccountRoutesJSON from './routes/bankAccountRouterJSON';
+import bankAccountRoutes from './routes/bankAccountRouterWeb';
 import loanRouteJSON from './routes/loansRouterJSON';
 import loanRouteWeb from './routes/loansRouterWeb';
-import userRouteWeb from './routes/userRouterWeb';
 import userRouteJSON from './routes/userRouterJSON';
-import methodOverride from 'method-override';
-import { errorHandler } from './middleware/errorHandler';
-import cors from 'cors';
-import cookieParser from 'cookie-parser';
-import dotenv from 'dotenv';
+import userRouteWeb from './routes/userRouterWeb';
 
 void (async function () {
   dotenv.config({ path: './.env.local' });
@@ -42,10 +44,16 @@ void (async function () {
   app.use('/users', userRouteWeb);
   app.use('/api/users', userRouteJSON);
 
+  const options = {
+    key: readFileSync('server.key'),
+    cert: readFileSync('server.cert')
+  };
+
   // Start server
   const PORT =
     process.env.PORT != null ? (process.env.PORT as unknown as number) : 3000;
-  app.listen(PORT, () => {
-    console.log(`Server started on port ${PORT}`);
+
+  https.createServer(options, app).listen(PORT, () => {
+    console.log(`App running on PORT ${PORT}...`);
   });
 })();

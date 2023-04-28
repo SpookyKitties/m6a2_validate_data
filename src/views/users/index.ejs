@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <h1>Users</h1>
+    <h1>Users | <a href="/users/logout">Logout</a></h1>
     <table>
         <thead>
             <tr>
@@ -52,8 +52,8 @@
                             </td>
                             <td>
                                 <a href="/users/<%= user._id %>">View</a> | <a
-                                    href="/users/<%= user._id %>/edit">Edit</a> | <% if(accountLevel==='admin' ) {%>
-                                    <a href="/users/delete/<%= user._id %>">Delete</a>
+                                    href="/users/<%= user._id %>/edit">Edit</a>
+                                <% if(accountLevel==='admin' ) {%> | <a href="/users/delete/<%= user._id %>">Delete</a>
                                     <% } %>
                             </td>
                 </tr>

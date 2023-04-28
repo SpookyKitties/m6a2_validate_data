@@ -136,7 +136,7 @@ export const createUserWeb = async (
       accountLevel
     });
     await user.save();
-    res.redirect('/users');
+    res.redirect('/users/login');
   } catch (err) {
     next(err);
   }

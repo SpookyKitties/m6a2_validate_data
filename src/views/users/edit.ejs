@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <h1>Edit User</h1>
+    <h1>Edit User | <a href="/users/logout">Logout</a></h1>
     <form action="/users/<%= user._id %>" method="POST">
         <input type="hidden" name="_method" value="PUT">
         <label for="username">Username:</label>

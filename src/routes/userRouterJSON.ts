@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import express from 'express';
 import {
+  createUserJSON,
+  deleteUserJSON,
+  editUserJSON,
   getUserJSON,
   getUsersJSON,
-  createUserJSON,
-  updateUserJSON,
-  deleteUserJSON,
   loginUserJSON,
-  editUserJSON
+  updateUserJSON
 } from '../controllers/userController';
 
 const router = express.Router();

@@ -1,6 +1,7 @@
 import { type Request, type Response, type NextFunction } from 'express';
 import Loan, { type ILoan } from '../models/loanModel';
-import { validateUserAdmin } from './validateUser';
+import { realValidateUser } from './validateUser';
+import { AccountLevel } from '../models/userModel';
 
 async function getLoans(): Promise<ILoan[]> {
   return await Loan.find({});
@@ -38,14 +39,19 @@ export const getLoansWeb = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const verify = await validateUserAdmin(req.headers.authorization as string);
+    const token = req.cookies.token as string;
+    const user = await realValidateUser(token);
 
-    if (verify) {
+    if (user?.accountLevel === AccountLevel.Admin) {
       const loans = await getLoans();
 
       res.render('loans/index', { loans });
+    } else if (user?.user !== undefined) {
+      const loans = Loan.find({ user: user.user._id });
+      res.render('loans/index', { loans });
+    } else {
+      throw new Error("User either doesn't exist, or isn't and admin");
     }
-    throw new Error("User either doesn't exist, or isn't and admin");
   } catch (err) {
     next(err);
   }
@@ -131,6 +137,8 @@ export const editLoanWeb = async (
   next: NextFunction
 ): Promise<void> => {
   try {
+    console.log('asdiofjaiosdfjoi');
+
     const loan = await Loan.findById(req.params.id);
     res.render('loans/edit', { loan });
   } catch (err) {

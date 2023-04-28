@@ -17,9 +17,9 @@ router.get('/', getLoansWeb);
 router.get('/new', (_req, res) => {
   res.render('loans/new', { faker });
 });
+router.get('/:id/edit', editLoanWeb);
 router.post('/', createLoanWeb);
 router.get('/:id', getLoanWeb);
-router.get('/:id/edit', editLoanWeb);
 router.put('/:id', updateLoanWeb);
 router.delete('/:id', deleteLoanWeb);
 

@@ -1,25 +1,17 @@
-import User, { AccountLevel } from '../models/userModel';
+import User, { type AccountLevel, type IUser } from '../models/userModel';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+dotenv.config({ path: './.env.local' });
 
-export async function validateUserAdmin(token: string): Promise<boolean> {
+export async function realValidateUser(
+  token: string
+): Promise<{ accountLevel: AccountLevel; user: IUser } | undefined> {
   try {
     const verify = jwt.verify(token, process.env.SECRET as string);
-    const user = await User.findById((verify as any)._id as string);
 
-    const val = user?.accountLevel === AccountLevel.Admin;
-    return val;
+    const user = (await User.findById((verify as any)._id as string)) as IUser;
+    return { accountLevel: user?.accountLevel, user };
   } catch (error) {
-    return false;
-  }
-}
-
-export async function validateUser(token: string): Promise<boolean> {
-  try {
-    const verify = jwt.verify(token, process.env.SECRET as string);
-    const user = await User.findById((verify as any)._id as string);
-
-    return user !== null;
-  } catch (error) {
-    return false;
+    return undefined;
   }
 }

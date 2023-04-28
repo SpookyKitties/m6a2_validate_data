@@ -1,7 +1,7 @@
-import { type Request, type Response, type NextFunction } from 'express';
-import User, { type IUser } from '../models/userModel';
 import dotenv from 'dotenv';
-import { validateUser, validateUserAdmin } from './validateUser';
+import { type NextFunction, type Request, type Response } from 'express';
+import User, { AccountLevel, type IUser } from '../models/userModel';
+import { realValidateUser } from './validateUser';
 dotenv.config({ path: './.env.local' });
 async function getUsers(): Promise<IUser[]> {
   return await User.find({});
@@ -13,14 +13,17 @@ export const getUsersJSON = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const verify = await validateUserAdmin(req.headers.authorization as string);
+    const verify = await realValidateUser(req.headers.token as string);
 
-    if (verify) {
+    console.log(verify);
+
+    if (verify?.accountLevel === AccountLevel.Admin) {
       const users = await getUsers();
 
       res.json({ users });
+    } else {
+      throw new Error("User either doesn't exist, or isn't and admin ");
     }
-    throw new Error("User either doesn't exist, or isn't and admin");
   } catch (err) {
     next(err);
   }
@@ -32,14 +35,21 @@ export const getUsersWeb = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const verify = await validateUserAdmin(req.cookies.token as string);
+    const token = req.cookies.token as string;
+    const verify = await realValidateUser(token);
 
-    if (verify) {
+    if (verify?.accountLevel === 'admin') {
       const users = await getUsers();
 
-      res.render('users/index', { users });
+      res.render('users/index', { users, accountLevel: verify.accountLevel });
+    } else if (verify?.accountLevel === 'regular') {
+      res.render('users/index', {
+        users: [verify.user],
+        accountLevel: verify.accountLevel
+      });
+    } else {
+      res.redirect('users/login');
     }
-    res.redirect('/users/login');
   } catch (err) {
     next(err);
   }
@@ -77,6 +87,29 @@ export const getUserJSON = async (
     next(err);
   }
 };
+
+export const newUserWeb = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    let token = req.cookies.token as string;
+    if (token === undefined) {
+      token = req.headers.token as string;
+    }
+
+    if (token === undefined) {
+      res.render('users/new');
+    } else {
+      res.redirect('users/');
+    }
+  } catch (error) {
+    console.log('Error:', error);
+    next(error);
+  }
+};
+
 export const createUserWeb = async (
   req: Request,
   res: Response,
@@ -108,18 +141,6 @@ export const createUserWeb = async (
     next(err);
   }
 };
-
-export const newUserWeb = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-): Promise<void> => {
-  if (!(await validateUser(req.cookies.token as string))) {
-    res.render('users/new');
-  }
-  res.redirect('/users');
-};
-
 export const createUserJSON = async (
   req: Request,
   res: Response,
@@ -158,6 +179,7 @@ export const updateUserWeb = async (
 ): Promise<Response<any, Record<string, any>> | undefined> => {
   try {
     const { firstName, lastName, email, age } = req.body;
+
     const user = await User.findByIdAndUpdate(
       req.params.id,
       { firstName, lastName, email, age },
@@ -215,8 +237,8 @@ export const deleteUserJSON = async (
   next: NextFunction
 ): Promise<Response<any, Record<string, any>> | undefined> => {
   try {
-    const admin = await validateUserAdmin(req.headers.token as string);
-    if (!admin) {
+    const admin = await realValidateUser(req.headers.token as string);
+    if (admin?.accountLevel !== AccountLevel.Admin) {
       throw new Error('User could not be found, or user is not an admin');
     }
     const user = await User.findByIdAndDelete(req.params.id);
@@ -300,6 +322,34 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
   console.log(token);
   res.cookie('token', token);
   res.redirect('/users'); // Redirect to the desired page after successful login
+};
+
+export const loginUserJSON = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ email });
+
+  if (user == null) {
+    res.status(400).json({
+      errorMessage: 'Invalid email or password'
+    });
+    return;
+  }
+
+  const isMatch = await user.comparePassword(password);
+  console.log(isMatch);
+  if (!isMatch) {
+    res.status(400).json({
+      errorMessage: 'Invalid email or password'
+    });
+    return;
+  }
+
+  const token = await user.generateAuthToken();
+  res.json(`Login successfull. Here is the token: ${token}`);
 };
 
 export const logoutUser = async (
